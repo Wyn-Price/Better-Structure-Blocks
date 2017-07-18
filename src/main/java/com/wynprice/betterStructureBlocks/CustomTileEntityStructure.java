@@ -141,6 +141,7 @@ public class CustomTileEntityStructure extends TileEntityStructure
         int j1 = MathHelper.clamp(compound.getInteger("sizeZ"), 0, Integer.MAX_VALUE);
         this.size = new BlockPos(l, i1, j1);
         super.setSize(this.size);
+        super.setPosition(this.position);
 
         try
         {
@@ -193,11 +194,9 @@ public class CustomTileEntityStructure extends TileEntityStructure
 		for (TileEntity te : player.getEntityWorld().loadedTileEntityList)
 			if(te instanceof CustomTileEntityStructure)
 			{
-				if(!updated)
-					new CustomGuiStructure((TileEntityStructure) te).f(position, size, mirror, rotation, mode.toString(), true, true, false, integrity, seed);
-				updated = true;
 				((CustomTileEntityStructure)te).setS(size);
 				((CustomTileEntityStructure)te).setP(position);
+				Main.update((CustomTileEntityStructure)te);
 			}
 		
 				

@@ -3,7 +3,6 @@ package com.wynprice.betterStructureBlocks;
 import net.minecraft.block.BlockStructure;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiEditStructure;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityStructure;
@@ -28,8 +27,7 @@ public class CustomBlockStructure extends BlockStructure
 	@Override
 	 public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	 {
-		TileEntity tileentity = worldIn.getTileEntity(pos);
-		Minecraft.getMinecraft().displayGuiScreen(new CustomGuiStructure((TileEntityStructure) tileentity));
+		Main.click(worldIn.getTileEntity(pos));
 		return true;
 	 }
 	
