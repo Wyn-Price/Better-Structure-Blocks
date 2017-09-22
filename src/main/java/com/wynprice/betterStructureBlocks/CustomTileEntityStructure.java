@@ -1,5 +1,6 @@
 package com.wynprice.betterStructureBlocks;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,31 +30,114 @@ import net.minecraft.world.gen.structure.template.TemplateManager;
 
 public class CustomTileEntityStructure extends TileEntityStructure
 {
-    public static String name = "";
-    public static String author = "";
-    public static String metadata = "";
-    public static BlockPos position = new BlockPos(0, 1, 0);
-    public static BlockPos size = BlockPos.ORIGIN;
-    public static Mirror mirror = Mirror.NONE;
-    public static Rotation rotation = Rotation.NONE;
-    public static TileEntityStructure.Mode mode = TileEntityStructure.Mode.DATA;
-    public static boolean ignoreEntities = true;
-    public static boolean powered;
-    public static boolean showAir;
-    public static boolean showBoundingBox = true;
-    public static float integrity = 1.0F;
-    public static long seed;
+    public String name = "";
+    public String author = "";
+    public String metadata = "";
+    public BlockPos position = new BlockPos(0, 1, 0);
+    public BlockPos actualPosition = new BlockPos(0, 1, 0);
+    public BlockPos size = BlockPos.ORIGIN;
+    private BlockPos actualSize = BlockPos.ORIGIN;
+    public Mirror mirror = Mirror.NONE;
+    public Rotation rotation = Rotation.NONE;
+    public TileEntityStructure.Mode mode = TileEntityStructure.Mode.DATA;
+    public boolean ignoreEntities = true;
+    public boolean powered;
+    public boolean showAir;
+    public boolean showBoundingBox = true;
+    public float integrity = 1.0F;
+    public long seed;
 	
 	public void setS(BlockPos s) {
 		this.size = s;
+		this.actualSize = s;
 		System.out.println("setting size to " + s.getX() + ", " + s.getY() + ", " + s.getZ());
 		super.setSize(s);
 	}
 	
 	public void setP(BlockPos p) {
 		this.position = p;
+		this.actualPosition = p;
 		System.out.println("setting position to " + p.getX() + ", " + p.getY() + ", " + p.getZ());
 		super.setPosition(p);
+	}
+	
+	@Override
+	public boolean save(boolean p_189712_1_) {
+		System.out.println("attempting to save");
+		if (this.mode == TileEntityStructure.Mode.SAVE && !this.world.isRemote && !StringUtils.isNullOrEmpty(this.name))
+        {
+            BlockPos blockpos = this.getPos().add(this.actualPosition);
+            WorldServer worldserver = (WorldServer)this.world;
+            MinecraftServer minecraftserver = this.world.getMinecraftServer();
+            TemplateManager templatemanager = worldserver.getStructureTemplateManager();
+            HarshenTemplate template = HarshenTemplate.getTemplate(new ResourceLocation(this.name));
+            template.takeBlocksFromWorld(this.world, this.actualPosition, blockpos, this.actualSize, true, Blocks.STRUCTURE_VOID);
+            template.setAuthor("Pricea1");
+            return !p_189712_1_ || HarshenTemplate.saveToFile(minecraftserver, new ResourceLocation(this.name));
+        }
+        else
+        {
+            return false;
+        }
+	}
+	
+	@Override
+	public boolean load(boolean p_189714_1_) {
+		System.out.println("attempting to load");
+		if (this.mode == TileEntityStructure.Mode.LOAD && !this.world.isRemote && !StringUtils.isNullOrEmpty(this.name))
+        {
+            BlockPos blockpos = this.getPos();
+            BlockPos blockpos1 = blockpos.add(this.actualPosition);
+            WorldServer worldserver = (WorldServer)this.world;
+            MinecraftServer minecraftserver = this.world.getMinecraftServer();
+            TemplateManager templatemanager = worldserver.getStructureTemplateManager();
+            Template template = templatemanager.get(minecraftserver, new ResourceLocation(this.name));
+
+            if (template == null)
+            {
+                return false;
+            }
+            else
+            {
+                if (!StringUtils.isNullOrEmpty(template.getAuthor()))
+                {
+                    this.author = template.getAuthor();
+                }
+
+                BlockPos blockpos2 = template.getSize();
+                System.out.println(template.getSize());
+                boolean flag = this.actualSize.equals(template.getSize());
+
+                if (!flag)
+                {
+                    this.actualSize = blockpos2;
+                    this.markDirty();
+                    IBlockState iblockstate = this.world.getBlockState(blockpos);
+                    this.world.notifyBlockUpdate(blockpos, iblockstate, iblockstate, 3);
+                }
+
+                if (p_189714_1_ && !flag)
+                {
+                    return false;
+                }
+                else
+                {
+                    PlacementSettings placementsettings = (new PlacementSettings()).setMirror(this.mirror).setRotation(this.rotation).setIgnoreEntities(this.ignoreEntities).setChunk((ChunkPos)null).setReplacedBlock((Block)null).setIgnoreStructureBlock(false);
+
+                    if (this.integrity < 1.0F)
+                    {
+                        placementsettings.setIntegrity(MathHelper.clamp(this.integrity, 0.0F, 1.0F)).setSeed(Long.valueOf(this.seed));
+                    }
+
+                    template.addBlocksToWorldChunk(this.world, blockpos1, placementsettings);
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
 	}
 	
 	@Override
@@ -188,22 +272,8 @@ public class CustomTileEntityStructure extends TileEntityStructure
 	}
 	
 	
-	public static void updateBlock(EntityPlayer player)
-	{
-		boolean updated = false;
-		for (TileEntity te : player.getEntityWorld().loadedTileEntityList)
-			if(te instanceof CustomTileEntityStructure)
-			{
-				((CustomTileEntityStructure)te).setS(size);
-				((CustomTileEntityStructure)te).setP(position);
-				Main.update((CustomTileEntityStructure)te);
-			}
-		
-				
-	}
 	
-	
-	public static void setx(int x, boolean typeIsPos)
+	public void setx(int x, boolean typeIsPos)
 	{
 		if(typeIsPos)
 			position = new BlockPos(x, position.getY(), position.getZ());
@@ -211,7 +281,7 @@ public class CustomTileEntityStructure extends TileEntityStructure
 			size = new BlockPos(x, size.getY(), size.getZ());
 	}
 	
-	public static void sety(int y, boolean typeIsPos)
+	public void sety(int y, boolean typeIsPos)
 	{
 		if(typeIsPos)
 			position = new BlockPos(position.getX(), y, position.getZ());
@@ -219,7 +289,7 @@ public class CustomTileEntityStructure extends TileEntityStructure
 			size = new BlockPos(size.getX(), y, size.getZ());
 	}
 	
-	public static void setz(int z, boolean typeIsPos)
+	public void setz(int z, boolean typeIsPos)
 	{
 		if(typeIsPos)
 			position = new BlockPos(position.getX(), position.getY(), z);

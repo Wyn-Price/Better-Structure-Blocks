@@ -9,5 +9,4 @@ public class Server
 	
 	public void click(TileEntity te){}
 
-	public void update(CustomTileEntityStructure te) {}
 }

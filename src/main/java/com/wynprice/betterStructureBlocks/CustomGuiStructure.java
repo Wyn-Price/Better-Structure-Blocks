@@ -714,6 +714,7 @@ public class CustomGuiStructure extends GuiScreen
         if (tileentitystructure$mode != TileEntityStructure.Mode.DATA)
         {
             this.drawString(this.fontRenderer, I18n.format("structure_block.structure_name"), this.width / 2 - 153, 30, 10526880);
+            if(this.nameEdit != null)
             this.nameEdit.drawTextBox();
         }
 

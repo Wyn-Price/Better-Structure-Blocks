@@ -28,11 +28,4 @@ public class Client extends Server
 	public void click(TileEntity te) {
 		Minecraft.getMinecraft().displayGuiScreen(new CustomGuiStructure((TileEntityStructure) te));
 	}
-	
-	@Override
-	public void update(CustomTileEntityStructure te) {
-		new CustomGuiStructure(te).f(CustomTileEntityStructure.position, CustomTileEntityStructure.size, CustomTileEntityStructure.mirror, 
-				CustomTileEntityStructure.rotation, CustomTileEntityStructure.mode.toString(), true, true,
-				false, CustomTileEntityStructure.integrity, CustomTileEntityStructure.seed);
-	}
 }

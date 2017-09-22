@@ -55,11 +55,6 @@ public class Main
 	public static void click(TileEntity te) {
 		proxy.click(te);
 	}
-
-	public static void update(CustomTileEntityStructure te) {
-		proxy.update(te);
-	
-	}
     
 
 
