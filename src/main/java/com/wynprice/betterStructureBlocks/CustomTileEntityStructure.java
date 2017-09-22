@@ -34,9 +34,7 @@ public class CustomTileEntityStructure extends TileEntityStructure
     private String author = "";
     private String metadata = "";
     private BlockPos position = new BlockPos(0, 1, 0);
-    private BlockPos actualPosition = new BlockPos(0, 1, 0);
     private BlockPos size = BlockPos.ORIGIN;
-    private BlockPos actualSize = BlockPos.ORIGIN;
     private Mirror mirror = Mirror.NONE;
     private Rotation rotation = Rotation.NONE;
     private TileEntityStructure.Mode mode = TileEntityStructure.Mode.DATA;
@@ -49,14 +47,12 @@ public class CustomTileEntityStructure extends TileEntityStructure
 	
 	public void setS(BlockPos s) {
 		this.size = s;
-		this.actualSize = s;
 		System.out.println("setting size to " + s.getX() + ", " + s.getY() + ", " + s.getZ());
 		super.setSize(s);
 	}
 	
 	public void setP(BlockPos p) {
 		this.position = p;
-		this.actualPosition = p;
 		System.out.println("setting position to " + p.getX() + ", " + p.getY() + ", " + p.getZ());
 		super.setPosition(p);
 	}
@@ -66,12 +62,12 @@ public class CustomTileEntityStructure extends TileEntityStructure
 		System.out.println("attempting to save");
 		if (this.mode == TileEntityStructure.Mode.SAVE && !this.world.isRemote && !StringUtils.isNullOrEmpty(this.name))
         {
-            BlockPos blockpos = this.getPos().add(this.actualPosition);
+            BlockPos blockpos = this.getPos().add(this.position);
             WorldServer worldserver = (WorldServer)this.world;
             MinecraftServer minecraftserver = this.world.getMinecraftServer();
             TemplateManager templatemanager = worldserver.getStructureTemplateManager();
             HarshenTemplate template = HarshenTemplate.getTemplate(new ResourceLocation(this.name));
-            template.takeBlocksFromWorld(this.world, this.actualPosition, blockpos, this.actualSize, true, Blocks.STRUCTURE_VOID);
+            template.takeBlocksFromWorld(this.world, this.position, blockpos, this.size, true, Blocks.STRUCTURE_VOID);
             template.setAuthor("Pricea1");
             return !p_189712_1_ || HarshenTemplate.saveToFile(minecraftserver, new ResourceLocation(this.name));
         }
@@ -83,11 +79,12 @@ public class CustomTileEntityStructure extends TileEntityStructure
 	
 	@Override
 	public boolean load(boolean p_189714_1_) {
-		System.out.println("attempting to load");
+		System.out.println("attempting to load with size " + "x:" + this.size.getX() + "y:" + this.size.getY() + "z:" + this.size.getZ()
+		+ "and pos x:" + this.position.getX() + "y:" + this.position.getY() + "z:" + this.position.getZ());
 		if (this.mode == TileEntityStructure.Mode.LOAD && !this.world.isRemote && !StringUtils.isNullOrEmpty(this.name))
         {
             BlockPos blockpos = this.getPos();
-            BlockPos blockpos1 = blockpos.add(this.actualPosition);
+            BlockPos blockpos1 = blockpos.add(this.size);
             WorldServer worldserver = (WorldServer)this.world;
             MinecraftServer minecraftserver = this.world.getMinecraftServer();
             TemplateManager templatemanager = worldserver.getStructureTemplateManager();
@@ -105,12 +102,11 @@ public class CustomTileEntityStructure extends TileEntityStructure
                 }
 
                 BlockPos blockpos2 = template.getSize();
-                System.out.println(template.getSize());
-                boolean flag = this.actualSize.equals(template.getSize());
+                boolean flag = this.size.equals(template.getSize());
 
                 if (!flag)
                 {
-                    this.actualSize = blockpos2;
+                    this.size = blockpos2;
                     this.markDirty();
                     IBlockState iblockstate = this.world.getBlockState(blockpos);
                     this.world.notifyBlockUpdate(blockpos, iblockstate, iblockstate, 3);
@@ -297,12 +293,14 @@ public class CustomTileEntityStructure extends TileEntityStructure
 			size = new BlockPos(size.getX(), size.getY(), z);
 	}
 	
+	
+	
 	public BlockPos getActualPosition() {
-		return actualPosition;
+		return position;
 	}
 	
 	public BlockPos getActualSize() {
-		return actualSize;
+		return size;
 	}
 	
 }

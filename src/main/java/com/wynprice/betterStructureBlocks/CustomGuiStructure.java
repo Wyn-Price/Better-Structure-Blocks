@@ -75,6 +75,8 @@ public class CustomGuiStructure extends GuiScreen
      */
     public void updateScreen()
     {
+    	if(nameEdit == null)
+    		return;
         this.nameEdit.updateCursorCounter();
         this.posXEdit.updateCursorCounter();
         this.posYEdit.updateCursorCounter();
@@ -509,12 +511,12 @@ public class CustomGuiStructure extends GuiScreen
             packetbuffer.writeByte(p_189820_1_);
             packetbuffer.writeString(this.tileStructure.getMode().toString());
             packetbuffer.writeString(this.nameEdit.getText());
-            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).getActualPosition().getX());
-            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).getActualPosition().getY());
-            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).getActualPosition().getZ());;
-            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).getActualSize().getX());
-            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).getActualSize().getY());
-            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).getActualSize().getZ());;
+            packetbuffer.writeInt(this.parseCoordinate(this.posXEdit.getText()));
+            packetbuffer.writeInt(this.parseCoordinate(this.posYEdit.getText()));
+            packetbuffer.writeInt(this.parseCoordinate(this.posZEdit.getText()));
+            packetbuffer.writeInt(this.parseCoordinate(this.sizeXEdit.getText()));
+            packetbuffer.writeInt(this.parseCoordinate(this.sizeYEdit.getText()));
+            packetbuffer.writeInt(this.parseCoordinate(this.sizeZEdit.getText()));
             packetbuffer.writeString(this.tileStructure.getMirror().toString());
             packetbuffer.writeString(this.tileStructure.getRotation().toString());
             packetbuffer.writeString(this.dataEdit.getText());
@@ -700,7 +702,60 @@ public class CustomGuiStructure extends GuiScreen
         return flag;
     }
 
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
+    {
+        super.mouseClicked(mouseX, mouseY, mouseButton);
 
+        if (this.nameEdit.getVisible())
+        {
+            this.nameEdit.mouseClicked(mouseX, mouseY, mouseButton);
+        }
+
+        if (this.posXEdit.getVisible())
+        {
+            this.posXEdit.mouseClicked(mouseX, mouseY, mouseButton);
+        }
+
+        if (this.posYEdit.getVisible())
+        {
+            this.posYEdit.mouseClicked(mouseX, mouseY, mouseButton);
+        }
+
+        if (this.posZEdit.getVisible())
+        {
+            this.posZEdit.mouseClicked(mouseX, mouseY, mouseButton);
+        }
+
+        if (this.sizeXEdit.getVisible())
+        {
+            this.sizeXEdit.mouseClicked(mouseX, mouseY, mouseButton);
+        }
+
+        if (this.sizeYEdit.getVisible())
+        {
+            this.sizeYEdit.mouseClicked(mouseX, mouseY, mouseButton);
+        }
+
+        if (this.sizeZEdit.getVisible())
+        {
+            this.sizeZEdit.mouseClicked(mouseX, mouseY, mouseButton);
+        }
+
+        if (this.integrityEdit.getVisible())
+        {
+            this.integrityEdit.mouseClicked(mouseX, mouseY, mouseButton);
+        }
+
+        if (this.seedEdit.getVisible())
+        {
+            this.seedEdit.mouseClicked(mouseX, mouseY, mouseButton);
+        }
+
+        if (this.dataEdit.getVisible())
+        {
+            this.dataEdit.mouseClicked(mouseX, mouseY, mouseButton);
+        }
+    }
 
     /**
      * Draws the screen and all the components in it.
