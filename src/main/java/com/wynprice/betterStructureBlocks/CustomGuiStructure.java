@@ -116,28 +116,28 @@ public class CustomGuiStructure extends GuiScreen
         BlockPos blockpos = this.tileStructure.getPosition();
         this.posXEdit = new GuiTextField(3, this.fontRenderer, this.width / 2 - 152, 80, 80, 20);
         this.posXEdit.setMaxStringLength(15);
-        this.posXEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getCustomPosition().getX()));
+        this.posXEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualPosition().getX()));
         this.tabOrder.add(this.posXEdit);
         this.posYEdit = new GuiTextField(4, this.fontRenderer, this.width / 2 - 72, 80, 80, 20);
         this.posYEdit.setMaxStringLength(15);
-        this.posYEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getCustomPosition().getY()));
+        this.posYEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualPosition().getY()));
         this.tabOrder.add(this.posYEdit);
         this.posZEdit = new GuiTextField(5, this.fontRenderer, this.width / 2 + 8, 80, 80, 20);
         this.posZEdit.setMaxStringLength(15);
-        this.posZEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getCustomPosition().getZ()));
+        this.posZEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualPosition().getZ()));
         this.tabOrder.add(this.posZEdit);
         BlockPos blockpos1 = this.tileStructure.getStructureSize();
         this.sizeXEdit = new GuiTextField(6, this.fontRenderer, this.width / 2 - 152, 120, 80, 20);
         this.sizeXEdit.setMaxStringLength(15);
-        this.sizeXEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getCustomSize().getX()));
+        this.sizeXEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualSize().getX()));
         this.tabOrder.add(this.sizeXEdit);
         this.sizeYEdit = new GuiTextField(7, this.fontRenderer, this.width / 2 - 72, 120, 80, 20);
         this.sizeYEdit.setMaxStringLength(15);
-        this.sizeYEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getCustomSize().getY()));
+        this.sizeYEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualSize().getY()));
         this.tabOrder.add(this.sizeYEdit);
         this.sizeZEdit = new GuiTextField(8, this.fontRenderer, this.width / 2 + 8, 120, 80, 20);
         this.sizeZEdit.setMaxStringLength(15);
-        this.sizeZEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getCustomSize().getZ()));
+        this.sizeZEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualSize().getZ()));
         this.tabOrder.add(this.sizeZEdit);
         this.integrityEdit = new GuiTextField(15, this.fontRenderer, this.width / 2 - 152, 120, 80, 20);
         this.integrityEdit.setMaxStringLength(15);
@@ -166,13 +166,13 @@ public class CustomGuiStructure extends GuiScreen
         
         
         ((CustomTileEntityStructure)this.tileStructure).setName(this.nameEdit.getText());
-    	this.sizeXEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).size.getX()));
-    	this.sizeYEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).size.getY()));
-    	this.sizeZEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).size.getZ()));
+    	this.sizeXEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualSize().getX()));
+    	this.sizeYEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualSize().getY()));
+    	this.sizeZEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualSize().getZ()));
     	
-    	this.posXEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).position.getX()));
-    	this.posYEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).position.getY()));
-    	this.posZEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).position.getZ()));
+    	this.posXEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualPosition().getX()));
+    	this.posYEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualPosition().getY()));
+    	this.posZEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualPosition().getZ()));
     }
 
     /**
@@ -244,13 +244,13 @@ public class CustomGuiStructure extends GuiScreen
                 if (this.sendToServer(1))
                 {
                 	((CustomTileEntityStructure)this.tileStructure).setName(this.nameEdit.getText());
-                	this.sizeXEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).size.getX()));
-                	this.sizeYEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).size.getY()));
-                	this.sizeZEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).size.getZ()));
+                	this.sizeXEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualSize().getX()));
+                	this.sizeYEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualSize().getY()));
+                	this.sizeZEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualSize().getZ()));
                 	
-                	this.posXEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).position.getX()));
-                	this.posYEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).position.getY()));
-                	this.posZEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).position.getZ()));
+                	this.posXEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualPosition().getX()));
+                	this.posYEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualPosition().getY()));
+                	this.posZEdit.setText(String.valueOf(((CustomTileEntityStructure)this.tileStructure).getActualPosition().getZ()));
                     this.mc.displayGuiScreen((GuiScreen)null);
                 }
             }
@@ -509,12 +509,12 @@ public class CustomGuiStructure extends GuiScreen
             packetbuffer.writeByte(p_189820_1_);
             packetbuffer.writeString(this.tileStructure.getMode().toString());
             packetbuffer.writeString(this.nameEdit.getText());
-            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).position.getX());
-            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).position.getY());
-            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).position.getZ());;
-            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).size.getX());
-            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).size.getY());
-            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).size.getZ());;
+            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).getActualPosition().getX());
+            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).getActualPosition().getY());
+            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).getActualPosition().getZ());;
+            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).getActualSize().getX());
+            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).getActualSize().getY());
+            packetbuffer.writeInt(((CustomTileEntityStructure)this.tileStructure).getActualSize().getZ());;
             packetbuffer.writeString(this.tileStructure.getMirror().toString());
             packetbuffer.writeString(this.tileStructure.getRotation().toString());
             packetbuffer.writeString(this.dataEdit.getText());

@@ -30,22 +30,22 @@ import net.minecraft.world.gen.structure.template.TemplateManager;
 
 public class CustomTileEntityStructure extends TileEntityStructure
 {
-    public String name = "";
-    public String author = "";
-    public String metadata = "";
-    public BlockPos position = new BlockPos(0, 1, 0);
-    public BlockPos actualPosition = new BlockPos(0, 1, 0);
-    public BlockPos size = BlockPos.ORIGIN;
+	private String name = "";
+    private String author = "";
+    private String metadata = "";
+    private BlockPos position = new BlockPos(0, 1, 0);
+    private BlockPos actualPosition = new BlockPos(0, 1, 0);
+    private BlockPos size = BlockPos.ORIGIN;
     private BlockPos actualSize = BlockPos.ORIGIN;
-    public Mirror mirror = Mirror.NONE;
-    public Rotation rotation = Rotation.NONE;
-    public TileEntityStructure.Mode mode = TileEntityStructure.Mode.DATA;
-    public boolean ignoreEntities = true;
-    public boolean powered;
-    public boolean showAir;
-    public boolean showBoundingBox = true;
-    public float integrity = 1.0F;
-    public long seed;
+    private Mirror mirror = Mirror.NONE;
+    private Rotation rotation = Rotation.NONE;
+    private TileEntityStructure.Mode mode = TileEntityStructure.Mode.DATA;
+    private boolean ignoreEntities = true;
+    private boolean powered;
+    private boolean showAir;
+    private boolean showBoundingBox = true;
+    private float integrity = 1.0F;
+    private long seed;
 	
 	public void setS(BlockPos s) {
 		this.size = s;
@@ -297,12 +297,12 @@ public class CustomTileEntityStructure extends TileEntityStructure
 			size = new BlockPos(size.getX(), size.getY(), z);
 	}
 	
-	public BlockPos getCustomSize() {
-		return size;
+	public BlockPos getActualPosition() {
+		return actualPosition;
 	}
 	
-	public BlockPos getCustomPosition() {
-		return position;
+	public BlockPos getActualSize() {
+		return actualSize;
 	}
 	
 }
