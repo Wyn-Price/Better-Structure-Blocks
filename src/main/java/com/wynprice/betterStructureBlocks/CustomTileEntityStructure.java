@@ -297,4 +297,12 @@ public class CustomTileEntityStructure extends TileEntityStructure
 			size = new BlockPos(size.getX(), size.getY(), z);
 	}
 	
+	public BlockPos getCustomSize() {
+		return size;
+	}
+	
+	public BlockPos getCustomPosition() {
+		return position;
+	}
+	
 }
